@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Aim Punch</title>
+  <style>
+    #range
+    {
+      position:absolute;
+      top: 0px;
+      left: 0px;
+      cursor:crosshair;
+      width: 100%;
+      height: 1000px;
+    }
+    #img1 
+    {
+      position:absolute;
+      border:none;
+      top: 10%;
+      right: 0%;
+      padding: 10px;
+      width: 5%;
+      user-select: none;
+    }
+    #score
+    {
+      font: 32px normal cartoon, verdana, sans-serif;
+      color:black;
+      padding: 10px;
+      background-color: blue;
+      border: solid;
+      white-space: nowrap;
+      user-select: none;
+    }
+    .br-color{
+      background-color: darkgreen;
+    }
+    #play-me{
+      position: absolute;
+      width: 8em;
+      border: solid;
+      left: 40%;
+      top: 70%;
+      font-size:2em;
+      background-color: blueviolet;
+      display:inline-block;
+      color:00000;
+    }
+    #stop-me{
+        position:absolute;
+        width: 8em;
+        border: solid;
+        left:70%;
+        font-size:2em;
+        background-color: red;
+        display:none;
+        user-select: none;
+      }
+    #game-title{
+      position:absolute;
+      width:6em;
+      border:solid;
+      border-radius: 6px;
+      left:35%;
+      top:45%;
+      text-align:center;
+      background-color: darkred;
+      font: 60px normal cartoon, verdana, sans-serif;
+      color:white;
+      padding: 10px;
+    }
+    #high-scores-heading{
+      position:absolute;
+      top:20%;
+      width:6em;
+      border:solid;
+      background-color: yellow;
+      text-align: center;
+      font: 20px normal cartoon, verdana, sans-serif;
+      color: red;
+
+    }
+    #high-scores{
+      position:absolute;
+      top:30%;
+      left:5%;
+      text-align: center;
+      font: 20px normal cartoon, verdana, sans-serif;
+    }
+    </style>
+    <script>
+      var timer1 = null;
+      var el = null;
+      var score = 0;
+      var shots = 0;
+      var accuracy = 0;
+      var shotsTurnOff = false;
+      var changeDir = false;
+      var moveRight = 1;
+      var moveLeft = 0;
+      var score = 0;
+      var changeToSpawn = false;
+
+      var snd = new Audio("lasersound.wav");
+      function moveIt()
+      {
+        if(parseInt(el.style.right) > 90 && moveRight == 0){
+          changeDir = true;
+          el.style.right = '90%';
+        }
+        if(parseInt(el.style.right) < 0 && moveLeft == 1){
+          changeDir = false;
+          el.style.right = '0%';
+        }
+        /*if (changeDir == true && score < 2){
+          el.style.right = parseInt(el.style.right) - 1 + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && score < 2){
+          el.style.right = parseInt(el.style.right) + 1 + '%';
+          moveRight = 0;
+        }
+          if (changeDir == true && score >= 5){
+          el.style.right = parseInt(el.style.right) - 2 + '%';
+          el.style.top = 4 + (8 * Math.tan(parseInt(el.style.right)/5)) + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && score >= 5){
+          el.style.right = parseInt(el.style.right) + 2 + '%';
+          el.style.top = 4 + (8 * Math.tan(parseInt(el.style.right)/5)) + '%';
+          moveRight = 0;
+        }
+        if (changeDir == true && (score >= 2 && score < 4)){
+          el.style.width = '2.5%';
+          el.style.right = parseInt(el.style.right) - 2 + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && (score >= 2 && score < 4)){
+          el.style.width = '2.5%';
+          el.style.right = parseInt(el.style.right) + 2 + '%';
+          moveRight = 0;
+        }
+        if (changeDir == true && (score >= 4  && score < 6)){
+          el.style.width = '2.5%';
+          el.style.right = parseInt(el.style.right) - 2.5 + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && (score >= 4 && score < 6)){
+          el.style.width = '2.5%';
+          el.style.right = parseInt(el.style.right) + 2.5 + '%';
+          moveRight = 0;
+        }
+        if (changeDir == true && (score >= 6  && score < 7)){
+          el.style.width = '2%';
+          el.style.right = parseInt(el.style.right) - 2 + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && (score >= 6 && score < 7)){
+          el.style.width = '2%';
+          el.style.right = parseInt(el.style.right) + 2 + '%';
+          moveRight = 0;
+        }
+        if (changeDir == true && (score >= 7  && score < 8)){
+          el.style.width = '1.5%';
+          el.style.right = parseInt(el.style.right) - 2 + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && (score >= 7 && score < 8)){
+          el.style.width = '1.5%';
+          el.style.right = parseInt(el.style.right) + 2 + '%';
+          moveRight = 0;
+        }
+        */
+        if (changeDir == true && (score < 2)){
+          el.style.width = '5%';
+          el.style.right = parseInt(el.style.right) - 1 + '%';
+          el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+          moveLeft = 1;
+        }
+        if (changeDir == false && (score <2 )){
+          el.style.width = '5%';
+          el.style.right = parseInt(el.style.right) + 1 + '%';
+          el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+          moveRight = 0;
+        }
+
+        if(score >= 10){
+         changeToSpawn = true;
+         el.style.top = (Math.random() * 60) + '%';
+         el.style.right = (Math.random() * 60) + '%';
+         el.style.bottom = (Math.random() * 60) + '%';
+         el.style.left = (Math.random() * 60) + '%';
+        }
+        /*else if (score > 1)
+          el.style.top = 300 + (80 * Math.sin(parseInt(el.style.left)/50)) + 'px';
+        else if (score > 3)
+          el.style.top = 200 + (80 * Math.sin(parseInt(el.style.left)/50)) + 'px';
+        */
+        if(changeToSpawn == true){
+          timer1 = setTimeout(moveIt,2000)
+        }
+        else{
+          timer1 = setTimeout(moveIt, 20);
+        }
+      }
+      function scoreUp()
+      {
+        score++;
+        snd.play();
+      }
+      function stopButton(){
+        document.getElementById("stop-me").onclick = function(){
+          location.reload();
+        }
+      }
+      function stopGameNow(){
+        var x = document.getElementById("stop-me");
+        x.style.display = "none";
+        if (x.style.display == "none"){
+          x.style.display = "block";
+          stopButton();
+        }
+        else{
+          x.style.display = "none";
+        }
+      }
+      function remove(y){
+         //reset shots to a value that is 1 below the default counter so that onclick of Play does not count towards shots
+        y.style.display = "block";
+        if (y.style.display == "block"){
+          y.style.display = "none";
+        }
+      }
+      function scoreboard()
+      {
+        var highscore = localStorage.getItem("highscore");
+        if(highscore !== null){
+            if (score > highscore) {
+                localStorage.setItem("highscore", score);      
+            }
+        }
+        else{
+            localStorage.setItem("highscore", score);
+        }
+        var showHighScores = document.getElementById("high-scores");
+        showHighScores.innerHTML = highscore;
+        if(shots == 0 && score == 0){
+          document.getElementById("score").innerHTML = "Shots: " + shots + "Score: " + score  + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accuracy: " + 0 + "%";
+        }
+        else{
+          document.getElementById("score").innerHTML = "Shots: " + shots + "Score: " + score  + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accuracy: " + ((score/shots)* 100).toFixed(2) + "%";
+        }
+      }
+        window.onload = function()
+        { 
+          scoreboard();
+          document.getElementById("play-me").onclick = function(){
+                var removeHSHeading = document.getElementById("high-scores-heading");
+                remove(removeHSHeading);
+                var removeHS = document.getElementById("high-scores");
+                remove(removeHS);
+                var removePlayMe = document.getElementById("play-me");
+                remove(removePlayMe);
+                var removeGameTitle = document.getElementById("game-title");
+                remove(removeGameTitle);
+                el = document.getElementById("img1");  //getting the Cannon Image by ID
+                el.onclick = scoreUp;//If its clicked on, call the ScoreUp function
+                document.getElementById("range").onclick = function() //getting the element which is Range or the clickable area on screen
+                {
+                  shots++; //if its clicked, increment the number of shots taken
+                  scoreboard(); //call the ScoreBoard function to populate values
+                }
+                scoreboard(); //Otherwise, this assuming that only the cannon is being clicked on and getting point
+                el.style.right = '1%'; //start off the target 1% from the right of the screen
+                moveIt();
+                stopGameNow();
+              }
+        }
+
+      </script>
+  </head>
+
+<body class="br-color">
+  <div id="range">
+      <div id = "score"></div>
+      <img alt = "Fire!" id ="img1" src="./targetcropped.png"/>
+  </div>
+  <div id = "game-title">Aim Punch</div>
+  <button id="play-me">Play</button>
+  <div id = "high-scores-heading">High Scores</div>
+  <div id = "high-scores"></div>
+  <button id="stop-me">Restart</button>
+</body>
+</html>
+      
+      
