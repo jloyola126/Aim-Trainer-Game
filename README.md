@@ -1,12 +1,12 @@
 # Shoot-and-Score
-Simple Shoot-and-Score JavaScript Game
+Simple Shoot-and-Score Aim Trainer
 
 Programmer: Jonathan Loyola
 
-A simple shoot and score game based off the famous Donkey Kong Country 1 King K Rool
-Boss fight. When you are able to click the cannonball 20 times, the pattern changes and
-the cannonball's speed also increases reflecting that of the actual boss fight. This concept
-is still in-progress and very early on in it's development. Added patterns and bonuses will
-be implmented in the future as well as a different arena.
+A simple shoot and score aim trainer web game that uses common patterns from first person shooters to measure accuracy.
+High Scoring data is saved locally. CSS, HTML, and Javascript were used as the languages.
 
-There are only two patterns as of now.
+Happy Shooting and Best of Luck!
+
+
+
