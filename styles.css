@@ -9,12 +9,10 @@
 }
 #img1 
 {
-    position:absolute;
-    border:none;
+    position:fixed;
     top: 40%;
     right: 0%;
-    padding: 10px;
-    width: 5%;
+    width: 120px;
     user-select: none;
 }
 #score
@@ -24,21 +22,22 @@
     padding: 10px;
     background-color: blue;
     border: solid;
-    white-space: nowrap;
     user-select: none;
 }
 .br-color{
     background-color: darkgreen;
 }
 #play-me{
-    position: absolute;
+    position: fixed;
+    align-content: center;
     width: 8em;
     border: solid;
-    left: 40%;
+    left: 50%;
     top: 70%;
     font-size:2em;
     background-color: blueviolet;
     display:inline-block;
+    transform: translate(-50%, -50%);
 }
 #stop-me{
     position:absolute;
@@ -51,17 +50,21 @@
     user-select: none;
 }
 #game-title{
-    position:absolute;
+    position: fixed;
     width:6em;
     border:solid;
     border-radius: 6px;
-    left:35%;
-    top:45%;
+    left:50%;
+    top:50%;
     text-align:center;
     background-color: darkred;
     font: 60px normal cartoon, verdana, sans-serif;
     color:white;
     padding: 10px;
+    transform: translate(-50%, -50%);
+}
+.high-scores-parent{
+    margin: auto;
 }
 #high-scores-heading{
     position:absolute;
@@ -72,6 +75,7 @@
     text-align: center;
     font: 20px normal cartoon, verdana, sans-serif;
     color: red;
+    margin:auto;
 }
 #high-scores{
     position:absolute;
@@ -79,12 +83,17 @@
     left:1%;
     text-align: center;
     font: 20px normal cartoon, verdana, sans-serif;
+    margin: auto;
 }
 #timer{
-    position: absolute;
+    position:absolute;
+    width: 3em;
+    border: solid;
     left:60%;
-    top:3%;
-    font: 20px normal cartoon, verdana, sans-serif;
+    font-size:2em;
+    background-color:grey;
+    user-select: none;
+    text-align: center;
 }
 #timed-out{
     position: absolute;

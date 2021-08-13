@@ -16,8 +16,10 @@ var spawnDiffEasy = false;
 var spawnDiffMedium = false;
 var spawwnDiffHard = false;
 var spawnDiffExpert = false;
+var defaultTimer = false;
 
-var snd = new Audio("lasersound.wav"); //incorporating sound file when target is clicked on
+
+//var snd = new Audio("lasersound.wav"); //incorporating sound file when target is clicked on
 
 function timedOutReload()
 {
@@ -29,19 +31,24 @@ function timedOutReload()
     document.body.style.backgroundColor = 'black';
 }
 
-function timer()
+function timer(x)
 {
-    var sec = 90;
-    var timer = setInterval(function()
-    {
-        document.getElementById('timer').innerHTML='00:'+sec;
-        sec--;
-        if (sec < 0) 
+    if (x){
+        var sec = 90;
+        var timer = setInterval(function()
         {
-            clearInterval(timer);
-            timedOutReload();
-        }
-    }, 1000);
+            document.getElementById('timer').innerHTML='00:'+sec;
+            sec--;
+            if (sec < 0) 
+            {
+                clearInterval(timer);
+                timedOutReload();
+            }
+        }, 1000);
+    }
+    else{
+        document.getElementById('timer').innerHTML='00:00';
+    }   
 }
 //getrandomintinclusive will handle spawning boundaries
 function getRandomIntInclusive(min, max) 
@@ -54,17 +61,22 @@ function getRandomIntInclusive(min, max)
 //Function moveIt() will handle animations
 function moveIt()
 {
+    var diameterOfTarget = document.getElementById("img1");
+    diameterOfTarget.style.width = '120px';
     //if target reaches 90% from the right side of the page, call a change to direction, set the default starting point to that percentage
-    if(parseInt(el.style.right) > 90 && moveRight == 0)
+    if(parseInt(el.style.right) > (screen.width-(parseInt(diameterOfTarget.style.width))) && moveRight == 0)
     {
+        console.log("Value of screen width:" + (screen.width - (parseInt(diameterOfTarget.style.width))));
         changeDir = true;
-        el.style.right = '90%';
+        el.style.right = 'screen.width';
     }
     //if target reaches 0% from the right side of the page, call a change to direction, set the default starting point to that percentage
     if(parseInt(el.style.right) < 0 && moveLeft == 1)
     {
+        console.log("In positioning 2nd if");
+
         changeDir = false;
-        el.style.right = '0%';
+        el.style.right = '0px';
     }
     /*
     Depending on the direction boolean and score counter, create patterns that increase in difficulty
@@ -72,121 +84,103 @@ function moveIt()
     */
     if (changeDir == true && score < 2)
     {
-        el.style.right = parseInt(el.style.right) - 1 + '%';
+        el.style.right = parseInt(el.style.right) - 3 + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && score < 2)
     {
-        el.style.right = parseInt(el.style.right) + 1 + '%';
+        el.style.right = parseInt(el.style.right) + 3 + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 2 && score < 4))
     {
-        el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) - 2 + '%';
+        el.style.right = parseInt(el.style.right) - 5 + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 2 && score < 4))
     {
-        el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) + 2 + '%';
+        el.style.right = parseInt(el.style.right) + 5 + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 4  && score < 6))
     {
-        el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) - 2.5 + '%';
+        el.style.right = parseInt(el.style.right) - 7 + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 4 && score < 6))
     {
-        el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) + 2.5 + '%';
+        el.style.right = parseInt(el.style.right) + 7 + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 6  && score < 7))
     {
-        el.style.width = '2%';
-        el.style.right = parseInt(el.style.right) - 2 + '%';
+        el.style.width = '4%';
+        el.style.right = parseInt(el.style.right) - 10 + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 6 && score < 7))
     {
-        el.style.width = '2%';
-        el.style.right = parseInt(el.style.right) + 2 + '%';
+        el.style.width = '4%';
+        el.style.right = parseInt(el.style.right) + 10 + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 7  && score < 8))
     {
-        el.style.width = '1.5%';
-        el.style.right = parseInt(el.style.right) - 2 + '%';
+        el.style.width = '4%';
+        el.style.right = parseInt(el.style.right) - 14 + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 7 && score < 8))
     {
-        el.style.width = '1.5%';
-        el.style.right = parseInt(el.style.right) + 2 + '%';
+        el.style.width = '4%';
+        el.style.right = parseInt(el.style.right) + 14 + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 8 && score < 10))
     {
         el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) - 1 + '%';
-        el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+        el.style.right = parseInt(el.style.right) - 8 + 'px';
+        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 8 && score < 10))
     {
         el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) + 1 + '%';
-        el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+        el.style.right = parseInt(el.style.right) + 8 + 'px';
+        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 10 && score < 12))
     {
         el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) - 1 + '%';
-        el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+        el.style.right = parseInt(el.style.right) - + 9 + 'px';
+        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 10 && score < 12))
     {
         el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) + 1 + '%';
-        el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+        el.style.right = parseInt(el.style.right) + 9 + 'px';
+        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
         moveRight = 0;
     }
     if (changeDir == true && (score >= 12 && score < 15))
     {
-        el.style.width = '2%';
-        el.style.right = parseInt(el.style.right) - 1 + '%';
-        el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
+        el.style.width = '5%';
+        el.style.right = parseInt(el.style.right) - 5 + 'px';
+        el.style.top = 50 + (40 * Math.tan(parseInt(el.style.right)/50)) + 'px';
         moveLeft = 1;
     }
     if (changeDir == false && (score >= 12 && score < 15))
     {
-        el.style.width = '2%';
-        el.style.right = parseInt(el.style.right) + 1 + '%';
-        el.style.top = 32 + (12.8 * Math.sin(parseInt(el.style.right)/8)) + '%';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 15 && score < 20))
-    {
         el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) - 1 + '%';
-        el.style.top = 8 + (12.8 * Math.tan(parseInt(el.style.right)/8)) + '%';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 15 && score < 20))
-    {
-        el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) + 1 + '%';
-        el.style.top = 8 + (12.8 * Math.tan(parseInt(el.style.right)/8)) + '%';
+        el.style.right = parseInt(el.style.right) + 5 + 'px';
+        el.style.top = 50 + (40 * Math.tan(parseInt(el.style.right)/50)) + 'px';
         moveRight = 0;
     }
         
     //Once higher difficulty is reached, change pattern to random spawning.
-    if(score >= 20 && score < 30)
+    if(score >= 15 && score < 30)
     {
         changeToSpawn = true;
         spawnDiffEasy = true;
@@ -243,7 +237,7 @@ function moveIt()
 function scoreUp()
 {
     score++;
-    snd.play();
+    //snd.play();
 }
 //once reload event is called, reload the page which will call window.onload()
 function reloadEvent()
@@ -311,9 +305,13 @@ window.onload = function ()
 {
     scoreboard(); //call the scoreboard to show preloaded.
     //Once play me is clicked...
+    timer(defaultTimer);
     document.getElementById("play-me").onclick = function () 
     {
-        timer();
+        defaultTimer = true;
+        timer(defaultTimer);
+        el = document.getElementById("img1");  //getting the Cannon Image by ID
+        el.onclick = scoreUp;//If its clicked on, call the ScoreUp function
         //...remove High Scores heading
         var removeHSHeading = document.getElementById("high-scores-heading");
         remove(removeHSHeading);
@@ -326,15 +324,13 @@ window.onload = function ()
         //...remove game title
         var removeGameTitle = document.getElementById("game-title");
         remove(removeGameTitle);
-        el = document.getElementById("img1");  //getting the Cannon Image by ID
-        el.onclick = scoreUp;//If its clicked on, call the ScoreUp function
         document.getElementById("range").onclick = function () //getting the element which is Range or the clickable area on screen
         {
             shots++; //if its clicked, increment the number of shots taken
             scoreboard(); //call the ScoreBoard function to populate values
         }
         scoreboard(); //Otherwise, this assuming that only the cannon is being clicked on and getting point
-        el.style.right = '1%'; //start off the target 1% from the right of the screen
+        el.style.right = '5%'; //start off the target 5% from the right of the screen
         moveIt(); //call animation function
         reloadHandler(); //call reload handler to see if a reload is needed to start a new game.
     }
