@@ -12,7 +12,7 @@
     position:fixed;
     top: 40%;
     right: 0%;
-    width: 120px;
+    width: 5%;
     user-select: none;
 }
 #score
@@ -43,6 +43,7 @@
     position:absolute;
     width: 8em;
     border: solid;
+    top: 1%;
     left:70%;
     font-size:2em;
     background-color: red;
@@ -59,6 +60,18 @@
     text-align:center;
     background-color: darkred;
     font: 60px normal cartoon, verdana, sans-serif;
+    color:white;
+    padding: 10px;
+    transform: translate(-50%, -50%);
+}
+#suggestion-alert{
+    position: fixed;
+    border:solid;
+    border-radius: 6px;
+    left:50%;
+    top:90%;
+    background-color:black;
+    font: 10px normal cartoon, verdana, sans-serif;
     color:white;
     padding: 10px;
     transform: translate(-50%, -50%);
@@ -86,10 +99,11 @@
     margin: auto;
 }
 #timer{
-    position:absolute;
+    position: absolute;
     width: 3em;
     border: solid;
-    left:60%;
+    left:55%;
+    top:1%;
     font-size:2em;
     background-color:grey;
     user-select: none;
@@ -97,8 +111,9 @@
 }
 #timed-out{
     position: absolute;
-    left:30%;
-    top:40%;
+    left:50%;
+    top:50%;
     font: 30px normal cartoon, verdana, sans-serif;
     color:white;
+    transform: translate(-50%, -50%);
 }

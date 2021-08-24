@@ -5,6 +5,7 @@
 var timervar = null; //timer for recursive call...used for animation
 var el = null; //event listener
 var score = 0; //score counter
+var trackingScore = 0;
 var shots = 0;  //shots counter
 var accuracy = 0;
 var accuracy = 0; //accuracy counter
@@ -37,7 +38,12 @@ function timer(x)
         var sec = 90;
         var timer = setInterval(function()
         {
-            document.getElementById('timer').innerHTML='00:'+sec;
+            if (sec >= 0 && sec <10){
+                document.getElementById('timer').innerHTML='00:'+'0'+sec;
+            }
+            else{
+                document.getElementById('timer').innerHTML='00:'+sec;
+            }
             sec--;
             if (sec < 0) 
             {
@@ -58,137 +64,10 @@ function getRandomIntInclusive(min, max)
     return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
       
-//Function moveIt() will handle animations
+//Function moveIt() will handle spawning
 function moveIt()
 {
-    var diameterOfTarget = document.getElementById("img1");
-    diameterOfTarget.style.width = '120px';
-    //if target reaches 90% from the right side of the page, call a change to direction, set the default starting point to that percentage
-    if(parseInt(el.style.right) > (screen.width-(parseInt(diameterOfTarget.style.width))) && moveRight == 0)
-    {
-        console.log("Value of screen width:" + (screen.width - (parseInt(diameterOfTarget.style.width))));
-        changeDir = true;
-        el.style.right = 'screen.width';
-    }
-    //if target reaches 0% from the right side of the page, call a change to direction, set the default starting point to that percentage
-    if(parseInt(el.style.right) < 0 && moveLeft == 1)
-    {
-        console.log("In positioning 2nd if");
-
-        changeDir = false;
-        el.style.right = '0px';
-    }
-    /*
-    Depending on the direction boolean and score counter, create patterns that increase in difficulty
-    parseInt will strip away the integer value from the full expression and add it back for movement.
-    */
-    if (changeDir == true && score < 2)
-    {
-        el.style.right = parseInt(el.style.right) - 3 + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && score < 2)
-    {
-        el.style.right = parseInt(el.style.right) + 3 + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 2 && score < 4))
-    {
-        el.style.right = parseInt(el.style.right) - 5 + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 2 && score < 4))
-    {
-        el.style.right = parseInt(el.style.right) + 5 + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 4  && score < 6))
-    {
-        el.style.right = parseInt(el.style.right) - 7 + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 4 && score < 6))
-    {
-        el.style.right = parseInt(el.style.right) + 7 + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 6  && score < 7))
-    {
-        el.style.width = '4%';
-        el.style.right = parseInt(el.style.right) - 10 + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 6 && score < 7))
-    {
-        el.style.width = '4%';
-        el.style.right = parseInt(el.style.right) + 10 + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 7  && score < 8))
-    {
-        el.style.width = '4%';
-        el.style.right = parseInt(el.style.right) - 14 + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 7 && score < 8))
-    {
-        el.style.width = '4%';
-        el.style.right = parseInt(el.style.right) + 14 + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 8 && score < 10))
-    {
-        el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) - 8 + 'px';
-        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 8 && score < 10))
-    {
-        el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) + 8 + 'px';
-        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 10 && score < 12))
-    {
-        el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) - + 9 + 'px';
-        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 10 && score < 12))
-    {
-        el.style.width = '2.5%';
-        el.style.right = parseInt(el.style.right) + 9 + 'px';
-        el.style.top = 200 + (80 * Math.sin(parseInt(el.style.right)/50)) + 'px';
-        moveRight = 0;
-    }
-    if (changeDir == true && (score >= 12 && score < 15))
-    {
-        el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) - 5 + 'px';
-        el.style.top = 50 + (40 * Math.tan(parseInt(el.style.right)/50)) + 'px';
-        moveLeft = 1;
-    }
-    if (changeDir == false && (score >= 12 && score < 15))
-    {
-        el.style.width = '5%';
-        el.style.right = parseInt(el.style.right) + 5 + 'px';
-        el.style.top = 50 + (40 * Math.tan(parseInt(el.style.right)/50)) + 'px';
-        moveRight = 0;
-    }
-        
-    //Once higher difficulty is reached, change pattern to random spawning.
-    if(score >= 15 && score < 30)
-    {
-        changeToSpawn = true;
-        spawnDiffEasy = true;
-        el.style.top = getRandomIntInclusive(7,50) + '%';
-        el.style.right = (Math.random() * 60) + '%';
-        el.style.left = (Math.random() * 60) + '%';
-    }
-    if(score >= 30 && score < 40)
+    if(score >= 0 && score < 30)
     {
         spawnDiffMedium = true;
         spawnDiffEasy = false;
@@ -196,7 +75,7 @@ function moveIt()
         el.style.right = (Math.random() * 60) + '%';
         el.style.left = (Math.random() * 60) + '%';
     }
-    if(score >= 40 && score < 50)
+    if(score >= 30 && score < 60)
     {
         spawwnDiffHard = true;
         spawnDiffMedium = false;
@@ -204,7 +83,7 @@ function moveIt()
         el.style.right = (Math.random() * 60) + '%';
         el.style.left = (Math.random() * 60) + '%';
     }
-    if(score >= 50)
+    if(score >= 60)
     {
         spawnDiffExpert = true;
         spawnDiffHard = false;
@@ -226,7 +105,7 @@ function moveIt()
     }
     else if(spawnDiffExpert == true)
     {
-        timervar = setTimeout(moveIt,600);
+        timervar = setTimeout(moveIt,500);
     }
     else
     {
@@ -237,7 +116,7 @@ function moveIt()
 function scoreUp()
 {
     score++;
-    //snd.play();
+    scoreboard();
 }
 //once reload event is called, reload the page which will call window.onload()
 function reloadEvent()
@@ -294,10 +173,11 @@ function scoreboard()
     //if statement handles shots showing 0, score showing 0 and accuracy being calculated correctly for 0/0. Else handles outputting shots, score, and accuracy with accuracy being rounded to 2 decimal places.
     if(shots == 0 && score == 0)
     {
-        document.getElementById("score").innerHTML = "Shots: " + shots + "Score: " + score  + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accuracy: " + 0 + "%";
+        document.getElementById("score").innerHTML = "Shots: " + shots + " Score: " + score  + " Accuracy: " + 0 + "%";
     }
-    else{
-        document.getElementById("score").innerHTML = "Shots: " + shots + "Score: " + score  + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Accuracy: " + accuracy + "%";
+    else
+    {
+        document.getElementById("score").innerHTML = "Shots: " + shots + " Score: " + score  + " Accuracy: " + accuracy + "%";
     }
 }
 
@@ -311,7 +191,7 @@ window.onload = function ()
         defaultTimer = true;
         timer(defaultTimer);
         el = document.getElementById("img1");  //getting the Cannon Image by ID
-        el.onclick = scoreUp;//If its clicked on, call the ScoreUp function
+        el.onclick = scoreUp;
         //...remove High Scores heading
         var removeHSHeading = document.getElementById("high-scores-heading");
         remove(removeHSHeading);
@@ -331,6 +211,7 @@ window.onload = function ()
         }
         scoreboard(); //Otherwise, this assuming that only the cannon is being clicked on and getting point
         el.style.right = '5%'; //start off the target 5% from the right of the screen
+        el.style.width = '10%';
         moveIt(); //call animation function
         reloadHandler(); //call reload handler to see if a reload is needed to start a new game.
     }
